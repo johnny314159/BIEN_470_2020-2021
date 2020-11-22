@@ -10,21 +10,21 @@ app.use(express.static('dist'));
 app.get('/api/runscript/', (req, res) => {
   let dataToSend;
   const seq = req.query.sequence;
+
   // spawn new child process to call the python script
   const python = spawn('python', ['./scripts/script1.py', seq]); // make sure script1.py is in same folder
   // collect data from script
   python.stdout.on('data', (data) => {
     console.log('Pipe data from python script ...');
+    const str = data.toString();
     // mock code to "parse" the response
-    const a = '1';
-    const t = '2';
+    const num = str.substr(13,1);
     const toReturn = {
-      thing1: data.toString(),
-      A: a,
-      T: t
+      fullString: str,
+      'num': num
     };
     // respond with the object
-    dataToSend = JSON.stringify(toReturn);
+    dataToSend = toReturn;
   });
   // in close event we are sure that stream from child process is closed
   python.on('close', (code) => {
