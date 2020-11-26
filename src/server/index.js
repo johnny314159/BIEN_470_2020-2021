@@ -1,15 +1,37 @@
 const express = require('express');
 const { spawn } = require('child_process'); // added
+const upload = require('express-fileupload');
+
 const os = require('os');
 
 const app = express();
 
-app.use(express.static('dist'));
-// app.get('/api/getUsername', (req, res) => res.send({ username: os.userInfo().username }));
+app.use(upload(undefined));
+
+app.get('/', (req, res) => {
+  res.sendFile(`${__dirname}/index.html`);
+});
+
+app.post('/', (req, res) => {
+  if (req.files) {
+    console.log(req.files);
+    const file = req.files.file;
+    const filename = file.name;
+    console.log(filename);
+
+    file.mv(`~/uploads/${filename}`, function (err) {
+      if (err) {
+        res.send(err);
+      } else {
+        res.send('File Uploaded');
+      }
+    });
+  }
+});
 
 app.get('/api/runscript/', (req, res) => {
   let dataToSend;
-  const seq = req.query.sequence;
+  const seq = req.query.sequence; // instead of this, it would get the file from the request
 
   // spawn new child process to call the python script
   const python = spawn('python', ['./scripts/script1.py', seq]); // make sure script1.py is in same folder
@@ -35,3 +57,5 @@ app.get('/api/runscript/', (req, res) => {
 });
 
 app.listen(process.env.PORT || 8080, () => console.log(`Listening on port ${process.env.PORT || 8080}!`));
+
+app.listen(3000)
