@@ -1,27 +1,19 @@
 import React, { Component } from 'react';
 import './app.css';
-import ReactImage from './react.png';
-import SimpleReactFileUpload from "./react-file-upload";
 
 export default class App extends Component {
-  state = { username: null };
-
-  componentDidMount() {
-    fetch('/api/getUsername')
-      .then(res => res.json())
-      .then(user => this.setState({ username: user.username }));
-  }
 
   render() {
-    const { username } = this.state;
     return (
-      <div>
-        {username ? <h1>{`Hello ${username}`}</h1> : <h1>Loading.. please wait!</h1>}
-        <img src={ReactImage} alt="react" />
-
+      <div className="container">
+        <h1>{"BIEN 470 Project"}</h1>
+        <h2>{"Sequence Counter"}</h2>
+        <form method="POST" action="/api/upload" encType="multipart/form-data">
+          <input type="file" name="target_file" />
+          <input type="file" name="target_file_2" />
+          <input type="submit" value="Upload" />
+        </form>
       </div>
     );
   }
 }
-
-/* <SimpleReactFileUpload /> */

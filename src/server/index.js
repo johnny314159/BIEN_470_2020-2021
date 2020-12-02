@@ -1,37 +1,58 @@
-const express = require('express');
 const { spawn } = require('child_process'); // added
-const upload = require('express-fileupload');
-
-const os = require('os');
-
+const express = require('express');
+const fileUpload = require('express-fileupload');
+const path = require('path');
 const app = express();
 
-app.use(upload(undefined));
+app.use(fileUpload({}));
 
-app.get('/', (req, res) => {
-  res.sendFile(`${__dirname}/index.html`);
-});
+app.post('/api/upload', (req, res) => {
 
-app.post('/', (req, res) => {
-  if (req.files) {
-    console.log(req.files);
-    const file = req.files.file;
-    const filename = file.name;
-    console.log(filename);
-
-    file.mv(`~/uploads/${filename}`, function (err) {
-      if (err) {
-        res.send(err);
-      } else {
-        res.send('File Uploaded');
-      }
-    });
+  if (!req.files || Object.keys(req.files).length === 0) {
+    return res.status(400).send('No files were uploaded.');
   }
+
+  // Accessing the file by the <input> File name="target_file"
+  const targetFile = req.files.target_file;
+
+  // mv(path, CB function(err))
+  targetFile.mv(path.join(__dirname, 'uploads', targetFile.name), (err) => {
+    if (err)
+      return res.status(500).send(err);
+  });
+
+  let dataToSend;
+  const seq = `./src/server/uploads/${targetFile.name}`; // instead of this, it would get the file from the request
+
+  // spawn new child process to call the python script
+  const python = spawn('python', ['./scripts/script1.py', seq]); // make sure script1.py is in same folder
+  // collect data from script
+  python.stdout.on('data', (data) => {
+    console.log('Pipe data from python script ...');
+    const str = data.toString();
+    // mock code to "parse" the response
+    const num = str.substr(13,1);
+    const toReturn = {
+      fullString: str,
+      'num': num
+    };
+    // respond with the object
+    dataToSend = toReturn;
+  });
+  // in close event we are sure that stream from child process is closed
+  python.on('close', (code) => {
+    console.log(`child process close all stdio with code ${code}`);
+    // send data to browser
+    /* delete file code here */
+    res.send(dataToSend);
+  });
+
 });
 
-app.get('/api/runscript/', (req, res) => {
+/*
+app.get('/run', (req, res) => {
   let dataToSend;
-  const seq = req.query.sequence; // instead of this, it would get the file from the request
+  const seq = '/Users/johnnyliu/Documents/GitHub/BIEN_470_interference/src/server/uploads/practicesequence.txt'; // instead of this, it would get the file from the request
 
   // spawn new child process to call the python script
   const python = spawn('python', ['./scripts/script1.py', seq]); // make sure script1.py is in same folder
@@ -55,7 +76,6 @@ app.get('/api/runscript/', (req, res) => {
     res.send(dataToSend);
   });
 });
+ */
 
 app.listen(process.env.PORT || 8080, () => console.log(`Listening on port ${process.env.PORT || 8080}!`));
-
-app.listen(3000)

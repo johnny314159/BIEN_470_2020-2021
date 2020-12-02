@@ -1,12 +1,20 @@
 import sys
 
-seq = sys.argv[1]
+sequence_path = sys.argv[1]
+print(sequence_path)
+rawseq = open(sequence_path, 'r')
+seq = rawseq.readlines()
 
 
 def parse(sequence):
-    length = len(sequence)
+    seq_string = ''
+    for each in range(len(sequence)):
+        seq_string += sequence[each].replace('\n', '')
+
+
+    length = len(seq_string)
     nucleotides = {'A': 0, 'T': 0, 'G': 0, 'C': 0}
-    for term in sequence:
+    for term in seq_string:
         nucleotides[term] += 1
     print('Sequence has ' + str(length) + ' nucleotides.')
     for term in nucleotides:
@@ -16,3 +24,4 @@ def parse(sequence):
 
 
 parse(seq)
+
