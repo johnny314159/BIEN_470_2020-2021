@@ -37,7 +37,8 @@ app.post('/api/upload', (req, res) => {
       'num': num
     };
     // respond with the object
-    dataToSend = toReturn;
+    // If we want to send the old page, can just send toReturn instead!
+    dataToSend = data;
   });
   // in close event we are sure that stream from child process is closed
   python.on('close', (code) => {

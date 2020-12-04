@@ -5,15 +5,41 @@ export default class App extends Component {
 
   render() {
     return (
-      <div className="container">
-        <h1>{"BIEN 470 Project"}</h1>
-        <h2>{"Sequence Counter"}</h2>
-        <form method="POST" action="/api/upload" encType="multipart/form-data">
-          <input type="file" name="target_file" />
-          <input type="file" name="target_file_2" />
-          <input type="submit" value="Upload" />
-        </form>
+      <div className="App">
+        <h1 className="App-header">
+          <br/>
+             BIEN470 project: Nucleotide-counting placeholder algorithm
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+
+          <form method="POST" action="/api/upload" encType="multipart/form-data">
+            <input type="file" name="target_file" />
+            <br/>
+            <br/>
+            <br/>
+            <input type="submit" value="Parse nucleotides" />
+          </form>
+
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+
+        </h1>
       </div>
+
+
     );
   }
 }

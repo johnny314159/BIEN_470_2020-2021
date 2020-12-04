@@ -1,7 +1,7 @@
 import sys
 
 sequence_path = sys.argv[1]
-print(sequence_path)
+#print(sequence_path)
 rawseq = open(sequence_path, 'r')
 seq = rawseq.readlines()
 
@@ -24,4 +24,3 @@ def parse(sequence):
 
 
 parse(seq)
-
