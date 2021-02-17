@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import TreeChart from './components/TreeChart.js'
 import './app.css';
+
+const treeData = require("./tree_data.json");
 
 export default class App extends Component {
   constructor(props) {
@@ -38,12 +41,12 @@ export default class App extends Component {
   render() {
     if (this.state.done) {
       return (
-        <div className="App"> Success: {this.state.data} </div>
+        <React.Fragment className="App">  <TreeChart data={treeData} /> </React.Fragment>
       )
     }
     else {
       return (
-        <div className="App">
+        <React.Fragment className="App">
           <h1 className="App-header">
             BIEN470 project: Nucleotide-counting placeholder algorithm
           </h1>
@@ -53,7 +56,8 @@ export default class App extends Component {
 
             <input type="submit" value="Parse nucleotides"/>
           </form>
-        </div>
+
+        </React.Fragment>
 
 
       );
