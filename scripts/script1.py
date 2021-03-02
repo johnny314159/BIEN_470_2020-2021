@@ -12,20 +12,20 @@ dir_tag = 'temp_dir_'+str(time.time())
 print('dir_tag:', dir_tag)
 
 # create non-overlapping file
-cmd = 'python ./scripts/just_create_parts.py ' + fname + ' ' + chrom + ' ' + dir_tag
+cmd = 'python ./phylo_utils/utils/just_create_parts.py ' + fname + ' ' + chrom + ' ' + dir_tag
 os.system(cmd)
 
 # run mafsInRegion for all parts file
 # e.g. part file: temp_dir/chr5-part-1.data
 # e.g. path_alignment: 100WayAlignment/chromosome.anc.
-cmd = 'python ./scripts/just_create_mafs.py ' + \
+cmd = 'python ./phylo_utils/utils/just_create_mafs.py ' + \
       dir_tag+'/'+chrom+'-part-1.data mafsInRegion ' + \
       dir_tag+'/'+chrom+'-part-1.data.maf'
 
 os.system(cmd)
 
 # collect the mafs
-cmd = 'python ./scripts/just_collect_mafs.py '+\
+cmd = 'python ./phylo_utils/utils/just_collect_mafs.py '+\
       dir_tag+'/'+chrom+'-part-1.data.maf ' + \
       dir_tag+'/'+chrom+'-part-1.data ' + \
       dir_tag+'/'+chrom+'-part-1.data.out'
