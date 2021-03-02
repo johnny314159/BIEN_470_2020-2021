@@ -41,7 +41,9 @@ export default class App extends Component {
   render() {
     if (this.state.done) {
       return (
+//      <div  className="App"> Success: {this.state.data} </div>
         <React.Fragment className="App">  <TreeChart data={treeData} /> </React.Fragment>
+
       )
     }
     else {

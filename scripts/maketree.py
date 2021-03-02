@@ -1,17 +1,22 @@
 import csv
 import pickle
 import json
+import os
+import sys
 
 # Dependencies:
 # This function automates the creation of a json tree to be displayed using d3 in react from the output of phyloPGM
 # Input: df_pgm.csv (or equivalent), species_converter.pkl for converting to english species names
 # Output: data.json (or equivalent), a hierarchical json tree that is d3-digestible
 
-with open('df_pgm_one_gene.csv', newline='') as csvfile:
+input_path = sys.argv[1]
+
+
+with open(input_path, newline='') as csvfile:
     df_pgm = csv.reader(csvfile, delimiter=',')
     phylo_in = list(df_pgm)
 
-with open('species_converter.pkl', 'rb') as f:
+with open('./scripts/species_converter.pkl', 'rb') as f:
     species_converter = pickle.load(f)
 
 # Make a list of all the species that have been output
@@ -165,5 +170,6 @@ tree['name'] = 'Common Ancestor'
 # Last but not least...
 # Export the tree!
 
-with open('tree_data.json', 'w') as out:
+
+with open('./src/client/tree_data.json', 'w') as out:
     json.dump(tree, out)
