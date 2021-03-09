@@ -6,7 +6,7 @@ To install the project locally, git clone the project into any folder. This proj
 Use 'npm install' in terminal or on command line to download the required dependencies.
 
 # Running the Server
-To run the program, start by running 'npm run start' in command-line. Exit from this and this use 'npm run dev'. This will run the project in your folder of choice.
+To run the program, start by running 'npm run start' in command-line. Exit from this and use 'npm run dev'. This will run the project in your browser of choice.
 
 # Project Architecture
 By top-level folder in alphabetical order.
