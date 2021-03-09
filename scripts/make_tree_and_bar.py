@@ -167,9 +167,42 @@ make_internal_nodes(tree)
 # Finally, change the name of the root to Common Ancestor
 tree['name'] = 'Common Ancestor'
 
+
+####
+# Making the bar chart
+####
+
+# init_score is the initial score of the root (human) before phyloPGM (the ratio)
+# sanity_sum is the sum of all scores of the branches by phyloPGM
+# pgm_pred is the sum of init_score + alpha*sanity_sum (see main working equation)
+# if pgm_pred>0, y is positive (yes label), else negative (no label)
+
+# Extract ratio root and pgm_pred basically
+
+for index in range(len(phylo_in[0])):
+    if phylo_in[0][index] == 'ratio_root':
+        init_score = float(phylo_in[1][index])
+
+    if phylo_in[0][index] == 'pgm_pred':
+        final_score = float(phylo_in[1][index])
+
+    if phylo_in[0][index] == 'sanity_sum':
+        sanity_sum = 0.1*float(phylo_in[1][index]) # alpha = 0.1
+
+# print(init_score)
+# print(sanity_sum)
+# print(final_score)
+# print(init_score + sanity_sum)
+
+results = [init_score, final_score, sanity_sum]
+
+
 # Last but not least...
-# Export the tree!
+# Export the tree and bar
 
 
 with open('./src/client/tree_data.json', 'w') as out:
     json.dump(tree, out)
+
+with open('./src/client/bar_data.json', 'w') as out_two:
+    json.dump(results, out_two)
