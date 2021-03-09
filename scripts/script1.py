@@ -51,7 +51,7 @@ cmd = 'python ./phyloPGM/expt_rna.py ./toy-data/df-train-100.csv '+pgm_input+' '
 os.system(cmd)
 
 # run the tree visualization
-cmd='python ./scripts/maketree.py '+pgm_output
+cmd='python ./scripts/make_tree_and_bar.py '+pgm_output
 os.system(cmd)
 
 

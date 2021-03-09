@@ -92,6 +92,33 @@ for species in extinct:
 # Checkpoint: Now, branches is a dictionary containing all nodes, following the aforementioned [parent, branch val,
 # node val]
 
+# Addition: In order to properly visualize the branch scores, will need to normalize them for d3
+
+normalized_branch_scores = {}
+maxval = ''
+
+for each in branches:
+    # Finding the max absolute score assigned to a branch
+    if branches[each][1] == '':
+        continue
+    
+    if maxval == '':
+        maxval = abs(float(branches[each][1]))
+        
+    if abs(float(branches[each][1])) > maxval:
+        maxval = abs(float(branches[each][1]))
+
+
+
+for each in branches:
+    if branches[each][1] == '':
+        normalized_branch_scores[each] = 'null'
+        continue
+    normalized_branch_scores[each] = float(branches[each][1]) / maxval
+
+print(normalized_branch_scores)
+
+
 # Making parents: dictionary as follows, internal node: [child 1, child 2]. This is used for forming the binary tree.
 parents = {}
 for each in extinct:
@@ -123,22 +150,18 @@ tree = {
     'children': []
 }
 
-
-# TODO: Add branch weights (each child is given the branch weight between its parent and itself)
-# TODO: Fix Rhesus macaque in species conversion
-# TODO: Automate inputs and outputs as system I/O for integration into the project
-
 def make_tree_structure(id):
     # This simple function just fills in a hierarchical tree structure rooted at node 'id'
     if id.isupper():
         filled_data = {
             'name': id,
             'node_score': branches[id][2],
+            'branch_score': normalized_branch_scores[id],
             'children': []
         }
 
     else:
-        filled_data = {'name': species_converter[id], 'node_score': branches[id][2]}
+        filled_data = {'name': species_converter[id], 'node_score': branches[id][2], 'branch_score': normalized_branch_scores[id]}
     return filled_data
 
 
@@ -168,6 +191,7 @@ make_internal_nodes(tree)
 tree['name'] = 'Common Ancestor'
 
 
+
 ####
 # Making the bar chart
 ####
@@ -194,7 +218,7 @@ for index in range(len(phylo_in[0])):
 # print(final_score)
 # print(init_score + sanity_sum)
 
-results = [init_score, final_score, sanity_sum]
+results = [init_score, sanity_sum, final_score]
 
 
 # Last but not least...
