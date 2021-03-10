@@ -50,13 +50,13 @@ export default class App extends Component {
       return (
         <React.Fragment className="App">
           <h1 className="App-header">
-            BIEN470 project: Nucleotide-counting placeholder algorithm
+            BIEN470 project: RNA binding site prediction
           </h1>
 
           <form method="POST" encType="multipart/form-data" onSubmit={this.handleSubmit} >
             <input type="file" name="target_file" onChange={this.handleChange} />
 
-            <input type="submit" value="Parse nucleotides"/>
+            <input type="submit" value="Extract Orthologs & Boost Predictions"/>
           </form>
 
         </React.Fragment>

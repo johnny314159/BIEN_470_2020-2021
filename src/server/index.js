@@ -32,12 +32,13 @@ app.post('/api/upload', (req, res) => {
   python.stdout.on('data', (data) => {
     console.log('Pipe data from python script ...');
     const str = data.toString();
+
     // mock code to "parse" the response
-    const num = str.substr(13,1);
+    /* const num = str.substr(13,1);
     const toReturn = {
       fullString: str,
       'num': num
-    };
+    }; */
 
     // respond with the object
     // If we want to send the old page, can just send toReturn instead!

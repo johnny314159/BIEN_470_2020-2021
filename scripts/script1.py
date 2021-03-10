@@ -2,14 +2,14 @@ import sys, time
 import os
 fname = sys.argv[1]
 
-print('fname:', fname)
+# print('fname:', fname)
 
 # get chromosome name
 chrom = open(fname).readlines()[0].split()[0]
-print('chrom:', chrom)
+# print('chrom:', chrom)
 
 dir_tag = 'temp_dir_'+str(time.time())
-print('dir_tag:', dir_tag)
+# rint('dir_tag:', dir_tag)
 
 # create non-overlapping file
 cmd = 'python ./phylo_utils/utils/just_create_parts.py ' + fname + ' ' + chrom + ' ' + dir_tag
@@ -53,8 +53,6 @@ os.system(cmd)
 # run the tree visualization
 cmd='python ./scripts/make_tree_and_bar.py '+pgm_output
 os.system(cmd)
-
-
 
 
 

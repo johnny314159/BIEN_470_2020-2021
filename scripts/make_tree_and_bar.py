@@ -101,10 +101,10 @@ for each in branches:
     # Finding the max absolute score assigned to a branch
     if branches[each][1] == '':
         continue
-    
+
     if maxval == '':
         maxval = abs(float(branches[each][1]))
-        
+
     if abs(float(branches[each][1])) > maxval:
         maxval = abs(float(branches[each][1]))
 
@@ -116,7 +116,7 @@ for each in branches:
         continue
     normalized_branch_scores[each] = float(branches[each][1]) / maxval
 
-print(normalized_branch_scores)
+# print(normalized_branch_scores)
 
 
 # Making parents: dictionary as follows, internal node: [child 1, child 2]. This is used for forming the binary tree.
@@ -230,3 +230,5 @@ with open('./src/client/tree_data.json', 'w') as out:
 
 with open('./src/client/bar_data.json', 'w') as out_two:
     json.dump(results, out_two)
+
+print("tree_bar_done")
