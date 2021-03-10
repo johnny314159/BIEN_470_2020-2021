@@ -3,7 +3,7 @@ import axios from 'axios';
 import TreeChart from './components/TreeChart.js'
 import './app.css';
 
-const treeData = require("./tree_data.json");
+
 
 export default class App extends Component {
   constructor(props) {
@@ -41,8 +41,9 @@ export default class App extends Component {
   render() {
     if (this.state.done) {
       return (
-//      <div  className="App"> Success: {this.state.data} </div>
-        <React.Fragment className="App">  <TreeChart data={treeData} /> </React.Fragment>
+     <div className="App"> Success: {console.log(require("./tree_data.json"))}  </div>  /*{this.state.data}*
+
+      /*  <div className="App">  {console.log(require("./tree_data.json"))} <TreeChart data={require("./tree_data.json")}/> </div> */
 
       )
     }
