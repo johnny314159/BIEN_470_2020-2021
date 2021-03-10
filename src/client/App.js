@@ -31,25 +31,25 @@ export default class App extends Component {
     axios
       .post('/api/upload', formData)
       .then((res) => {
+        console.log(res.data);
         this.setState({ done: true, data: res.data })
-        console.log(res);
       })
-      .catch((err) => alert("File Upload Error"));
+      .catch((err) => {
+        console.log(err);
+        alert("File Upload Error")
+      });
     event.preventDefault();
   }
 
   render() {
     if (this.state.done) {
-      return (
-     <div className="App"> Success: {console.log(require("./tree_data.json"))}  </div>  /*{this.state.data}*
-
-      /*  <div className="App">  {console.log(require("./tree_data.json"))} <TreeChart data={require("./tree_data.json")}/> </div> */
-
-      )
+      return(
+        <div className="App"> <TreeChart data={this.state.data}/> </div>);
+      /* <div className="App"> Success: {console.log(require("./tree_data.json"))}  </div>  {this.state.data}*/
     }
     else {
       return (
-        <React.Fragment className="App">
+        <div className="App">
           <h1 className="App-header">
             BIEN470 project: RNA binding site prediction
           </h1>
@@ -60,7 +60,7 @@ export default class App extends Component {
             <input type="submit" value="Extract Orthologs & Boost Predictions"/>
           </form>
 
-        </React.Fragment>
+        </div>
 
 
       );

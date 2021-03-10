@@ -3,6 +3,7 @@ const express = require('express');
 const fileUpload = require('express-fileupload');
 const path = require('path');
 const app = express();
+const fs = require('fs');
 
 app.use(fileUpload({}));
 
@@ -23,7 +24,7 @@ app.post('/api/upload', (req, res) => {
       return res.status(500).send(err);
   });
 
-  let dataToSend;
+  let dataToSend = "";
   const seq = `./src/server/uploads/${targetFile.name}`; // instead of this, it would get the file from the request
 
   // spawn new child process to call the python script
@@ -31,7 +32,6 @@ app.post('/api/upload', (req, res) => {
   // collect data from script
   python.stdout.on('data', (data) => {
     console.log('Pipe data from python script ...');
-    const str = data.toString();
 
     // mock code to "parse" the response
     /* const num = str.substr(13,1);
@@ -42,14 +42,27 @@ app.post('/api/upload', (req, res) => {
 
     // respond with the object
     // If we want to send the old page, can just send toReturn instead!
-    dataToSend = data;
+    dataToSend = dataToSend + data;
   });
   // in close event we are sure that stream from child process is closed
   python.on('close', (code) => {
     console.log(`child process close all stdio with code ${code}`);
+    /* HERE, open .json from pipeline, add it to res */
     // send data to browser
     /* delete file code here */
-    res.send(dataToSend);
+    let x = '';
+    fs.readFile("./src/server/tree_data.json", 'utf8', function (err,data) {
+      if (err) {
+        return console.log(err);
+      }
+      x = x + data;
+      /* read second file */
+      /* below would be callback for second readFile */
+      //x = x + data;
+      // console.log(x);
+
+      res.send(x);
+    });
   });
 
 });
