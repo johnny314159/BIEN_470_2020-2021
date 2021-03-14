@@ -18,6 +18,8 @@ export default class App extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+
+
   handleChange(event) {
     console.log(event.target.files[0]);
     this.setState({ value: event.target.files[0] });
@@ -44,7 +46,14 @@ export default class App extends Component {
   render() {
     if (this.state.done) {
       return(
-        <div className="App"> <TreeChart data={this.state.data}/> </div>);
+
+        <div className="RenderedApp"> 
+          
+          <div style={{height: '75vh', marginLeft: '10vh', paddingBottom: '20px'}}><TreeChart data={this.state.data[0]}/></div>
+          
+          
+        </div>
+        );
       /* <div className="App"> Success: {console.log(require("./tree_data.json"))}  </div>  {this.state.data}*/
     }
     else {

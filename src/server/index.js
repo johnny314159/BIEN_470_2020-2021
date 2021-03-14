@@ -50,19 +50,21 @@ app.post('/api/upload', (req, res) => {
     /* HERE, open .json from pipeline, add it to res */
     // send data to browser
     /* delete file code here */
-    let x = '';
+  
     fs.readFile("./src/server/tree_data.json", 'utf8', function (err,data) {
       if (err) {
         return console.log(err);
       }
-      x = x + data;
+      tree = JSON.parse(data);
+      
       /* read second file */
       /* below would be callback for second readFile */
-      //x = x + data;
-      // console.log(x);
+      /* used to be let x = '' above, then x = x + data, then send x*/      
+      res.send([tree, "bingbong"]);
 
-      res.send(x);
+      
     });
+    
   });
 
 });

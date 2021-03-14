@@ -4,12 +4,16 @@ import useResizeObserver from "./useResizeObserver";
 
 
 function TreeChart({ data }) {
+
   const svgRef = useRef();
   const wrapperRef = useRef();
   const dimensions = useResizeObserver(wrapperRef);
 
   // check if a string is upper case
   const isUpperCase = str => str === str.toUpperCase();
+
+  // check if a value is positive or negative
+  const isPositive = number => number > 0;
 
 
   // will be called initially and on every data change
@@ -34,9 +38,27 @@ function TreeChart({ data }) {
         .attr("class", "link")
         .attr("d", linkGenerator)
         .attr("fill", "none")
-        .attr("stroke", "#57bdc3");
+        .attr("stroke", d =>
+                {if((d.target.data.branch_score === "null")) {return "black"}
+                else if(d.target.data.branch_score > 0) {return "#57bdc3"}
+                else {return "#C35D57"}
+              })
+        .attr("stroke-dasharray", d => (d.target.data.branch_score === "null") ? 5 : 0)
+        .attr("stroke-width",  4)
+        .attr("opacity", d => (Math.abs(parseFloat(d.target.data.branch_score)) < 0.01) ? 1 :5*Math.abs(parseFloat(d.target.data.branch_score)));
+        // d => 100*Math.abs(parseFloat(d.target.data.branch_score))
 
       // render nodes
+      svg
+        .selectAll(".node")
+        .data(root.descendants())
+        .join(enter => enter.append("circle").attr("opacity", 1))
+        .attr("class", "node")
+        .attr("cx", node => node.y)
+        .attr("cy", node => node.x)
+        .attr("stroke", node => (node.data.node_score > 1) ? "red" : "black")
+        .attr("fill", node => (node.data.node_score > 1) ? "transparent" : "black")
+        .attr("r", node => (node.data.node_score > 1) ? 4 : 6*node.data.node_score);
 
 
       // render labels
@@ -45,7 +67,7 @@ function TreeChart({ data }) {
         .data(root.descendants())
         .join(enter => enter.append("text").attr("opacity", 1))
         .attr("class", "label")
-        .attr("x", node => node.y)
+        .attr("x", node => node.children ? -5 + node.y: 5 + node.y)
         .attr("y", node => node.x)
         .attr("dy", "0.32em")
         .attr("text-anchor", node => node.children ? 'end': 'start')
@@ -61,8 +83,8 @@ function TreeChart({ data }) {
 }, [data, dimensions]);
 
   return (
-    <div ref={wrapperRef} style={{ marginBottom: "2rem", marginLeft: "4rem" }}>
-      <svg ref={svgRef}></svg>
+    <div ref={wrapperRef} >
+      <svg ref={svgRef} ></svg>
     </div>
   );
 }
