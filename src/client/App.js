@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import TreeChart from './components/TreeChart.js'
+import BarChart from './components/BarChart.js'
+import AboutData from './components/AboutData.js'
 import './app.css';
 
 
@@ -33,7 +35,7 @@ export default class App extends Component {
     axios
       .post('/api/upload', formData)
       .then((res) => {
-        console.log(res.data);
+        console.log(res.data[1]);
         this.setState({ done: true, data: res.data })
       })
       .catch((err) => {
@@ -48,8 +50,10 @@ export default class App extends Component {
       return(
 
         <div className="RenderedApp"> 
-          
-          <div style={{height: '75vh', marginLeft: '10vh', paddingBottom: '20px'}}><TreeChart data={this.state.data[0]}/></div>
+          <h1>Results</h1>
+          <div className="tree-container" style={{height: '90vh', marginLeft: '10vh'}}><TreeChart data={this.state.data[0]}/></div>
+          <div className="bar-container" style={{height: '25vh'}}><BarChart data={this.state.data[1]}/></div>
+          <div className="about-container" style={{height: '80vh'}}><AboutData data={this.state.data[1]}/></div>
           
           
         </div>

@@ -10,7 +10,7 @@ body{
 
 .RenderedApp {
   text-align: center;
-  height: 300vh;
+  height: 200vh;
 }
 
 .App-header {
@@ -75,4 +75,8 @@ text {
   -1px 1px 3px white,
   1px -1px 3px white,
   1px 1px 3px white;
+}
+
+.bar-container {
+  display: inline-block;
 }
