@@ -12,7 +12,7 @@ if __name__ == '__main__':
     input_bed = sys.argv[1]
     chrom = sys.argv[2]
     temp_dir = sys.argv[3]
-    batch_size = int(sys.argv[4])
+    #batch_size = int(sys.argv[4])
 
     extract_obj = ExtractOrthologs.Extractor(input_bed=input_bed,
                                              temp_dir=temp_dir
