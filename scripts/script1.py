@@ -13,7 +13,7 @@ dir_tag = 'temp_dir_'+str(time.time())
 
 # create non-overlapping file
 # python file.py input_bed chr temp_dir batch_size
-cmd = 'python ..//phylo_utils/utils/just_create_parts.py ' + fname + ' ' + chrom + ' ' + dir_tag + ' 1'
+cmd = 'python ..//phylo_utils/utils/just_create_parts.py ' + fname + ' ' + chrom + ' ' + dir_tag
 os.system(cmd)
 print('just create parts done')
 
