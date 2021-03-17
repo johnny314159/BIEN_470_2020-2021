@@ -5,7 +5,12 @@ body{
 }
 
 .App {
+  text-align: center; 
+}
+
+.RenderedApp {
   text-align: center;
+  height: 200vh;
 }
 
 .App-header {
@@ -58,7 +63,6 @@ svg {
   flex-direction: column;
   align-items: stretch;
   justify-content: center;
-  height: 60vh;
   padding: 0 50px 150px;
   text-align: center;
   box-sizing: border-box;
@@ -71,4 +75,8 @@ text {
   -1px 1px 3px white,
   1px -1px 3px white,
   1px 1px 3px white;
+}
+
+.bar-container {
+  display: inline-block;
 }

@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import TreeChart from './components/TreeChart.js'
+import BarChart from './components/BarChart.js'
+import AboutData from './components/AboutData.js'
 import './app.css';
 
-const treeData = require("./tree_data.json");
+
 
 export default class App extends Component {
   constructor(props) {
@@ -18,6 +20,8 @@ export default class App extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+
+
   handleChange(event) {
     console.log(event.target.files[0]);
     this.setState({ value: event.target.files[0] });
@@ -31,35 +35,45 @@ export default class App extends Component {
     axios
       .post('/api/upload', formData)
       .then((res) => {
+        console.log(res.data[1]);
         this.setState({ done: true, data: res.data })
-        console.log(res);
       })
-      .catch((err) => alert("File Upload Error"));
+      .catch((err) => {
+        console.log(err);
+        alert("File Upload Error")
+      });
     event.preventDefault();
   }
 
   render() {
     if (this.state.done) {
-      return (
-//      <div  className="App"> Success: {this.state.data} </div>
-        <React.Fragment className="App">  <TreeChart data={treeData} /> </React.Fragment>
+      return(
 
-      )
+        <div className="RenderedApp"> 
+          <h1>Results</h1>
+          <div className="tree-container" style={{height: '90vh', marginLeft: '10vh'}}><TreeChart data={this.state.data[0]}/></div>
+          <div className="bar-container" style={{height: '25vh'}}><BarChart data={this.state.data[1]}/></div>
+          <div className="about-container" style={{height: '80vh'}}><AboutData data={this.state.data[1]}/></div>
+          
+          
+        </div>
+        );
+      /* <div className="App"> Success: {console.log(require("./tree_data.json"))}  </div>  {this.state.data}*/
     }
     else {
       return (
-        <React.Fragment className="App">
+        <div className="App">
           <h1 className="App-header">
-            BIEN470 project: Nucleotide-counting placeholder algorithm
+            BIEN470 project: RNA binding site prediction
           </h1>
 
           <form method="POST" encType="multipart/form-data" onSubmit={this.handleSubmit} >
             <input type="file" name="target_file" onChange={this.handleChange} />
 
-            <input type="submit" value="Parse nucleotides"/>
+            <input type="submit" value="Extract Orthologs & Boost Predictions"/>
           </form>
 
-        </React.Fragment>
+        </div>
 
 
       );
