@@ -5,7 +5,7 @@ from os import path
 
 if __name__ == '__main__':
 
-    if len(sys.argv) < 5:
+    if len(sys.argv) < 4:
         print('python file.py input_bed chr temp_dir batch_size')
         exit(0)
 
@@ -21,8 +21,7 @@ if __name__ == '__main__':
     extract_obj.df = extract_obj.df[extract_obj.df[0]==chrom]
 
     num_files = extract_obj.create_parts(extract_obj.df,
-                                         path.join(temp_dir, chrom),
-                                         batch_size=batch_size
+                                         path.join(temp_dir, chrom)
                                          )
     print('Done. creating non-overlapping files. num_files:', num_files)
 
