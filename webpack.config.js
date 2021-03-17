@@ -34,10 +34,13 @@ module.exports = {
   devServer: {
     port: 3000,
     open: true,
+    compress: true,
+    public: 'store-client-nestroia1.c9users.io',
     historyApiFallback: true,
     proxy: {
       '/api': 'http://localhost:8080'
-    }
+    },
+    disableHostCheck: true,
   },
   plugins: [
     new CleanWebpackPlugin([outputDirectory]),
