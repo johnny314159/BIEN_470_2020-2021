@@ -4,6 +4,7 @@ node_modules
 yarn.lock
 100WayAlignment
 ecosystem.config.js
+webpack.config.js
 
 
 
