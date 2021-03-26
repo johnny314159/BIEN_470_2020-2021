@@ -45,8 +45,8 @@ function TreeChart({ data }) {
               })
         .attr("stroke-dasharray", d => (d.target.data.branch_score === "null") ? 5 : 0)
         .attr("stroke-width",  4)
-        .attr("opacity", d => (Math.abs(parseFloat(d.target.data.branch_score)) < 0.01) ? 1 :5*Math.abs(parseFloat(d.target.data.branch_score)));
-        // d => 100*Math.abs(parseFloat(d.target.data.branch_score))
+        .attr("opacity", d => (Math.abs(parseFloat(d.target.data.branch_score)) < 0.25) ? 0.25 : Math.abs(parseFloat(d.target.data.branch_score)));
+        
 
       // render nodes
       svg
@@ -56,9 +56,9 @@ function TreeChart({ data }) {
         .attr("class", "node")
         .attr("cx", node => node.y)
         .attr("cy", node => node.x)
-        .attr("stroke", node => (node.data.node_score > 1) ? "red" : "black")
-        .attr("fill", node => (node.data.node_score > 1) ? "transparent" : "black")
-        .attr("r", node => (node.data.node_score > 1) ? 4 : 6*node.data.node_score);
+        .attr("stroke", "black")
+        .attr("fill", node => (node.data.node_score < 0.5) ? "transparent" : "black")
+        .attr("r", node => (node.data.node_score > 1) ? 0 : 4);
 
 
       // render labels
