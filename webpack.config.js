@@ -35,7 +35,6 @@ module.exports = {
     port: 3000,
     open: true,
     compress: true,
-    public: 'store-client-nestroia1.c9users.io',
     historyApiFallback: true,
     proxy: {
       '/api': 'http://localhost:8080'
