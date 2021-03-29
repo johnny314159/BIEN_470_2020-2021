@@ -75,6 +75,8 @@ cmd='python ./scripts/make_tree_and_bar.py '+pgm_output
 #os.system(cmd)
 print('done tree visualization in script1')
 
+## Add specific print command to be picked up by React?
+
 
 ## remove the temp dir
 #cmd='\rm -rf ' + dir_tag

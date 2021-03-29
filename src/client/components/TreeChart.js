@@ -40,8 +40,8 @@ function TreeChart({ data }) {
         .attr("fill", "none")
         .attr("stroke", d =>
                 {if((d.target.data.branch_score === "null")) {return "black"}
-                else if(d.target.data.branch_score > 0) {return "#57bdc3"}
-                else {return "#C35D57"}
+                else if(d.target.data.branch_score > 0) {return "#C35D57"}
+                else {return "#57bdc3"}
               })
         .attr("stroke-dasharray", d => (d.target.data.branch_score === "null") ? 5 : 0)
         .attr("stroke-width",  4)

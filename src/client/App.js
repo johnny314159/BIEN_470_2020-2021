@@ -46,13 +46,15 @@ export default class App extends Component {
   }
 
   render() {
+    /*Change the if statement here to pickup on a specific printed command?*/
+    
     if (this.state.done) {
       return(
 
         <div className="RenderedApp"> 
           <h1>Results</h1>
           <div className="tree-container" style={{height: '90vh', marginLeft: '10vh'}}><TreeChart data={this.state.data[0]}/></div>
-          <div className="bar-container" style={{height: '25vh'}}><BarChart data={this.state.data[1]}/></div>
+          <div className="bar-container" style={{height: '40vh'}}><BarChart data={this.state.data[1]}/></div>
           <div className="about-container" style={{height: '80vh'}}><AboutData data={this.state.data[1]}/></div>
           
           
