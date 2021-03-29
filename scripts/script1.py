@@ -72,7 +72,7 @@ print('done phyloPGM in script1')
 
 # run the tree visualization
 cmd='python ./scripts/make_tree_and_bar.py '+pgm_output
-#os.system(cmd)
+os.system(cmd)
 print('done tree visualization in script1')
 
 ## Add specific print command to be picked up by React?
