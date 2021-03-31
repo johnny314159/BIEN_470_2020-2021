@@ -75,9 +75,41 @@ function TreeChart({ data }) {
         .text(node => isUpperCase(node.data.name) ? '' : node.data.name)
 
 
+      var colors =	[ ["Positive contribution", "#C35D57"], ["Negative contribution", "#57bdc3"] ];
 
-    // I basically need to resize it and I'm good? for now
-    // and also fix the marks it leaves when you actively resize it...
+      // Adding the legend
+      var legend = svg.append("svg")
+        .attr("class", "legend")
+        .attr("height", 100)
+        .attr("width", 100)
+        .attr('transform', 'translate(20,50)');
+
+
+      var legendRect = legend.selectAll('rect').data(colors);
+
+      legendRect.enter()
+        .append("rect")
+        .attr("x", 10)
+        .attr("width", 10)
+        .attr("height", 10)
+        .attr("y", function(d, i) {
+            return i * 20;
+        })
+        .style("fill", function(d) {
+            return d[1];
+        });
+
+      var legendText = legend.selectAll('text').data(colors);
+
+      legendText.enter()
+        .append("text")
+        .attr("x", 25)
+        .attr("y", function(d, i) {
+            return i * 20 + 10;
+        })
+        .text(function(d) {
+            return d[0];
+        });
 
 
 }, [data, dimensions]);
