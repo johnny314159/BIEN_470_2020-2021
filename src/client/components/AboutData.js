@@ -16,7 +16,7 @@ function AboutData({ data }) {
           A <b>negative</b> likelihood ratio indicates a "false" label; the input sequence is not predicted to be an RNA-binding site.
 
           <h1>About the data visualization</h1>
-          On both charts, red represents negative values and blue represents positive values.
+          On both charts, blue represents negative values and red represents positive values.
           <br/> <br/> 
           The bar chart displays the likelihood ratio of the root (human sequence), the sum of the branches' likelihood ratios multiplied by α, and the sum of the two.
           If the middle bar is the same colour as the left bar, the orthologous sequences reinforced the original label. 

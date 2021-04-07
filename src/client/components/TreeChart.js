@@ -40,13 +40,13 @@ function TreeChart({ data }) {
         .attr("fill", "none")
         .attr("stroke", d =>
                 {if((d.target.data.branch_score === "null")) {return "black"}
-                else if(d.target.data.branch_score > 0) {return "#57bdc3"}
-                else {return "#C35D57"}
+                else if(d.target.data.branch_score > 0) {return "#C35D57"}
+                else {return "#57bdc3"}
               })
         .attr("stroke-dasharray", d => (d.target.data.branch_score === "null") ? 5 : 0)
         .attr("stroke-width",  4)
-        .attr("opacity", d => (Math.abs(parseFloat(d.target.data.branch_score)) < 0.01) ? 1 :5*Math.abs(parseFloat(d.target.data.branch_score)));
-        // d => 100*Math.abs(parseFloat(d.target.data.branch_score))
+        .attr("opacity", d => (Math.abs(parseFloat(d.target.data.branch_score)) < 0.25) ? 0.25 : Math.abs(parseFloat(d.target.data.branch_score)));
+        
 
       // render nodes
       svg
@@ -56,9 +56,9 @@ function TreeChart({ data }) {
         .attr("class", "node")
         .attr("cx", node => node.y)
         .attr("cy", node => node.x)
-        .attr("stroke", node => (node.data.node_score > 1) ? "red" : "black")
-        .attr("fill", node => (node.data.node_score > 1) ? "transparent" : "black")
-        .attr("r", node => (node.data.node_score > 1) ? 4 : 6*node.data.node_score);
+        .attr("stroke", "black")
+        .attr("fill", node => (node.data.node_score < 0.5) ? "transparent" : "black")
+        .attr("r", node => (node.data.node_score > 1) ? 0 : 4);
 
 
       // render labels
@@ -75,9 +75,41 @@ function TreeChart({ data }) {
         .text(node => isUpperCase(node.data.name) ? '' : node.data.name)
 
 
+      var colors =	[ ["Positive contribution", "#C35D57"], ["Negative contribution", "#57bdc3"] ];
 
-    // I basically need to resize it and I'm good? for now
-    // and also fix the marks it leaves when you actively resize it...
+      // Adding the legend
+      var legend = svg.append("svg")
+        .attr("class", "legend")
+        .attr("height", 100)
+        .attr("width", 100)
+        .attr('transform', 'translate(20,50)');
+
+
+      var legendRect = legend.selectAll('rect').data(colors);
+
+      legendRect.enter()
+        .append("rect")
+        .attr("x", 10)
+        .attr("width", 10)
+        .attr("height", 10)
+        .attr("y", function(d, i) {
+            return i * 20;
+        })
+        .style("fill", function(d) {
+            return d[1];
+        });
+
+      var legendText = legend.selectAll('text').data(colors);
+
+      legendText.enter()
+        .append("text")
+        .attr("x", 25)
+        .attr("y", function(d, i) {
+            return i * 20 + 10;
+        })
+        .text(function(d) {
+            return d[0];
+        });
 
 
 }, [data, dimensions]);
