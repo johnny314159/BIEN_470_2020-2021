@@ -22,7 +22,7 @@ if __name__ == '__main__':
 
     num_files = extract_obj.create_parts(extract_obj.df,
                                          path.join(temp_dir, chrom),
-                                         batch_size=batch_size
+                                         #batch_size=batch_size
                                          )
     print('Done. creating non-overlapping files. num_files:', num_files)
 
